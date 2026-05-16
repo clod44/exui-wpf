@@ -29,7 +29,7 @@ exui/
 ## Templates
 - the `templates` folder contains the ui elements you can use.  
 - the `exui-wpf.exe` is used for template selection and telemetry accession.
-- you can inspect and create a clone of the `Speedometer` template, change the names and change the `.xaml` file to create a new template. you have all the reach of a `.wpf` file and a constructor `.cs` file which you can expand from. 
+- you can inspect and create a clone of the [Speedometer](https://github.com/clod44/Speedometer) template, change the names and change the `.xaml` file to create a new template. you have all the reach of a `.wpf` file and a constructor `.cs` file which you can expand from. 
 - for practice, keep your template content contained within your template folder.
 ## Telemetry data
 ### .wpf
