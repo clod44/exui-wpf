@@ -39,15 +39,50 @@ public partial class Main : Window
     }
 
     private void DiscoverProjectTemplates()
-    {
-        var windowTypes = Assembly.GetExecutingAssembly().GetTypes()
-            .Where(t => typeof(Window).IsAssignableFrom(t) && !t.IsAbstract && t != typeof(Window) && t.Name != "Main");
+{
+    // 1. Discover built-in templates compiled directly inside the main launcher
+    var localTypes = Assembly.GetExecutingAssembly().GetTypes()
+        .Where(t => typeof(Window).IsAssignableFrom(t) && !t.IsAbstract && t != typeof(Window) && t.Name != "Main");
 
-        foreach (var type in windowTypes)
+    foreach (var type in localTypes)
+    {
+        AvailableTemplates.Add(new TemplateItem { Name = type.Name, Type = type });
+    }
+
+    // 2. Dynamic Drop-In Scanning: Look for external compiled plugin templates (.dll)
+    string templatesFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "templates");
+    if (!Directory.Exists(templatesFolder))
+    {
+        Directory.CreateDirectory(templatesFolder);
+        return;
+    }
+
+    // Scan all subdirectories for compiled extension libraries
+    string[] externalPlugins = Directory.GetFiles(templatesFolder, "*.dll", SearchOption.AllDirectories);
+    foreach (string dllPath in externalPlugins)
+    {
+        try
         {
-            AvailableTemplates.Add(new TemplateItem { Name = type.Name, Type = type });
+            // Dynamically load the third-party assembly into memory
+            Assembly pluginAssembly = Assembly.LoadFrom(dllPath);
+            var pluginWindows = pluginAssembly.GetTypes()
+                .Where(t => typeof(Window).IsAssignableFrom(t) && !t.IsAbstract && t != typeof(Window));
+
+            foreach (var type in pluginWindows)
+            {
+                // Prevent name duplicate overlap collisions
+                if (!AvailableTemplates.Any(t => t.Name.Equals(type.Name, StringComparison.OrdinalIgnoreCase)))
+                {
+                    AvailableTemplates.Add(new TemplateItem { Name = type.Name, Type = type });
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"[exui] Skipped or failed loading plugin asset [{Path.GetFileName(dllPath)}]: {ex.Message}");
         }
     }
+}
 
     private void ProcessBootConfiguration()
     {

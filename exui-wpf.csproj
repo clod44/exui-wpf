@@ -9,8 +9,7 @@
     <RootNamespace>exui_wpf</RootNamespace>
     <AssemblyName>exui_wpf</AssemblyName>
   </PropertyGroup>
-
   <ItemGroup>
-    <Resource Include="templates\**\*" Exclude="templates\**\*.cs;templates\**\*.xaml" />
+    <Content Include="templates\**\*" CopyToOutputDirectory="PreserveNewest" Exclude="templates\**\*.cs;templates\**\*.xaml" />
   </ItemGroup>
 </Project>

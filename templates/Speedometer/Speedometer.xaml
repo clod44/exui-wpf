@@ -45,7 +45,7 @@
                 
                 <TextBlock Text="{Binding Telemetry[speed], StringFormat={}{0:000}}" 
                         FontSize="86" FontWeight="Bold" 
-                        FontFamily="/templates/Speedometer/seven_segment.ttf#Seven Segment"
+                        FontFamily="pack://siteoforigin:,,,/templates/Speedometer/seven_segment.ttf#Seven Segment"
                         Foreground="#64D2FF" HorizontalAlignment="Center">
                     <TextBlock.Effect>
                         <DropShadowEffect BlurRadius="15" Color="#64D2FF" ShadowDepth="0" Opacity="0.4"/>
@@ -68,7 +68,7 @@
                     </Border.Style>
                     
                    <TextBlock FontSize="30" FontWeight="Bold" 
-                            FontFamily="/templates/Speedometer/seven_segment.ttf#Seven Segment"
+                            FontFamily="pack://siteoforigin:,,,/templates/Speedometer/seven_segment.ttf#Seven Segment"
                             HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock.Style>
                             <Style TargetType="TextBlock">
