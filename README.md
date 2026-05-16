@@ -2,6 +2,9 @@
 frontend receiver of exui-api
 
 **under progress. not ready for casual usage. Proof of Concept**
+
+### requirements
+- .net sdk 10 LTS
 ## What
 **Goal**: to create new ui elements to nfsu2 with ease.
 
