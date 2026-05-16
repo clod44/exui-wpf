@@ -1,0 +1,118 @@
+<Window x:Class="exui_wpf.Speedometer"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Speedometer" Height="280" Width="440"
+        WindowStyle="None" AllowsTransparency="True" Topmost="True"
+        WindowStartupLocation="CenterScreen"
+        Tag="Ghost">
+    
+    <Window.Style>
+        <Style TargetType="Window">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="ResizeMode" Value="NoResize"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding DesignMode}" Value="True">
+                    <Setter Property="Background" Value="#CC111112"/>
+                    <Setter Property="ResizeMode" Value="CanResizeWithGrip"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Style>
+    
+    <Viewbox Stretch="Uniform" Margin="10">
+        <Grid Width="400" Height="240">
+            
+            <Path Data="M 50,200 A 150,150 0 0 1 350,200" 
+                  Stroke="#666669" StrokeThickness="6" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+
+            <Grid Width="6" Height="175" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,25,0,0" 
+                  RenderTransformOrigin="0.5,1.0">
+                <Grid.RenderTransform>
+                    <TransformGroup>
+                        <RotateTransform Angle="-90"/>
+                        <RotateTransform Angle="{Binding Telemetry[speed]}"/>
+                    </TransformGroup>
+                </Grid.RenderTransform>
+                
+                <Rectangle Fill="#FF453A" RadiusX="3" RadiusY="3">
+                    <Rectangle.Effect>
+                        <DropShadowEffect BlurRadius="8" Color="#FF453A" ShadowDepth="0" Opacity="0.8"/>
+                    </Rectangle.Effect>
+                </Rectangle>
+            </Grid>
+
+            <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,70,0,0">
+                
+                <TextBlock Text="{Binding Telemetry[speed], StringFormat={}{0:000}}" 
+                        FontSize="86" FontWeight="Bold" 
+                        FontFamily="/templates/Speedometer/seven_segment.ttf#Seven Segment"
+                        Foreground="#64D2FF" HorizontalAlignment="Center">
+                    <TextBlock.Effect>
+                        <DropShadowEffect BlurRadius="15" Color="#64D2FF" ShadowDepth="0" Opacity="0.4"/>
+                    </TextBlock.Effect>
+                </TextBlock>
+
+                <TextBlock Text="M     P     H" FontSize="11" FontWeight="Bold" 
+                           Foreground="#8E8E93" HorizontalAlignment="Center" Margin="0,-5,0,12"/>
+
+                <Border Width="45" Height="45" Background="#1C1C1E" BorderThickness="2" CornerRadius="6">
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Setter Property="BorderBrush" Value="#3A3A3C"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Telemetry[gear]}" Value="1">
+                                    <Setter Property="BorderBrush" Value="#30D158"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                    
+                   <TextBlock FontSize="30" FontWeight="Bold" 
+                            FontFamily="/templates/Speedometer/seven_segment.ttf#Seven Segment"
+                            HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Text" Value="?"/>
+                                <Setter Property="Foreground" Value="#AEAEB2"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Telemetry[gear]}" Value="0">
+                                        <Setter Property="Text" Value="R"/>
+                                        <Setter Property="Foreground" Value="#FF453A"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Telemetry[gear]}" Value="1">
+                                        <Setter Property="Text" Value="N"/>
+                                        <Setter Property="Foreground" Value="#30D158"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Telemetry[gear]}" Value="2">
+                                        <Setter Property="Text" Value="1"/>
+                                        <Setter Property="Foreground" Value="White"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Telemetry[gear]}" Value="3">
+                                        <Setter Property="Text" Value="2"/>
+                                        <Setter Property="Foreground" Value="White"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Telemetry[gear]}" Value="4">
+                                        <Setter Property="Text" Value="3"/>
+                                        <Setter Property="Foreground" Value="White"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Telemetry[gear]}" Value="5">
+                                        <Setter Property="Text" Value="4"/>
+                                        <Setter Property="Foreground" Value="White"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Telemetry[gear]}" Value="6">
+                                        <Setter Property="Text" Value="5"/>
+                                        <Setter Property="Foreground" Value="White"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Telemetry[gear]}" Value="7">
+                                        <Setter Property="Text" Value="6"/>
+                                        <Setter Property="Foreground" Value="White"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </Border>
+            </StackPanel>
+        </Grid>
+    </Viewbox>
+</Window>
