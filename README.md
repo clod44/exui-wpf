@@ -14,6 +14,9 @@ frontend receiver of exui-api
 
 ![screenshot.png](screenshot.png)
 
+## usage
+download a release and launch the .exe
+
 ## Project
 you are expected to have this kind of folder structure
 ```
