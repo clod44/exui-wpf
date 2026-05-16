@@ -3,8 +3,6 @@ frontend receiver of exui-api
 
 **under progress. not ready for casual usage. Proof of Concept**
 
-### requirements
-- .net sdk 10 LTS
 ## What
 **Goal**: to create new ui elements to nfsu2 with ease.
 
@@ -16,62 +14,47 @@ frontend receiver of exui-api
 
 ![screenshot.png](screenshot.png)
 
+## Project
+you are expected to have this kind of folder structure
+```
+exui/
+├── exui-api/
+│   └── exui-api.dll
+├── exui-wpf/
+│   └── exui-wpf.dll
+└── templates/
+    └── Speedometer/ (a template)
+        └── Speedometer.dll
+```
 ## Templates
 - the `templates` folder contains the ui elements you can use.  
-- the `Main` template is special and like a simple parent to the others.
-- you can copy the `Speedometer` template, change the names and change the `.xaml` file to create a new template. you have all the reach of a `.wpf` file and a constructor `.cs` file which you can expand from. 
+- the `exui-wpf.exe` is used for template selection and telemetry accession.
+- you can inspect and create a clone of the `Speedometer` template, change the names and change the `.xaml` file to create a new template. you have all the reach of a `.wpf` file and a constructor `.cs` file which you can expand from. 
 - for practice, keep your template content contained within your template folder.
 ## Telemetry data
 ### .wpf
 ```xml 
-<TextBlock Text="{Binding Telemetry[speed], StringFormat={}{0:000}}" ...
+Value={Binding Telemetry[gear]}
 ```
-the "speed" keyword here is in the incoming websocket data. see backend configuration: [exui-api variables.txt](https://github.com/clod44/exui-api/blob/main/variables.txt)
+the "gear" keyword here is in the incoming websocket data key. see backend configuration: [exui-api variables.txt](https://github.com/clod44/exui-api/blob/main/variables.txt)
 
 
 get all data: 
 ```xml
-<ItemsControl ItemsSource="{Binding Telemetry.Entries}">
+<ItemsControl ItemsSource="{Binding TelemetryRows}">
 ```
 
 ### .cs
-Read once:
+basically
 ```cs
-if (this.DataContext is MainState state)
-    {
-        float currentSpeed = (float)state.Telemetry["speed"];
-        ...
-    }
-```
+private MainWindow? _hostContext;
 
-Read continuously:
-```cs
-    public Speedometer()
-    {
-        InitializeComponent();
-
-        // 1. Wait until WPF successfully attaches the DataContext to this window
-        this.DataContextChanged += (sender, args) =>
-        {
-            if (this.DataContext is MainState state)
-            {
-                state.Telemetry.PropertyChanged += OnTelemetryTick;
-            }
-        };
-    }
-
-
-    private void OnTelemetryTick(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
-    {
-        // speed change only
-        if (e.PropertyName == "speed" && this.DataContext is MainState state)
-        {
-            float speed = (float)state.Telemetry["speed"];
-        }
-    }
+...
+{
+    double speed = Convert.ToDouble(_hostContext.Telemetry["speed"]);
+                
 }
 ```
-
 <hr>
 
 **fork/commit encouraged**

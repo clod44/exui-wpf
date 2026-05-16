@@ -3,13 +3,13 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net10.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <UseWpf>true</UseWpf>
     <RootNamespace>exui_wpf</RootNamespace>
     <AssemblyName>exui_wpf</AssemblyName>
+    <Nullable>enable</Nullable>
+    <OutputPath>..\dist\</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWpf>true</UseWpf>
   </PropertyGroup>
-  <ItemGroup>
-    <Content Include="templates\**\*" CopyToOutputDirectory="PreserveNewest" Exclude="templates\**\*.cs;templates\**\*.xaml" />
-  </ItemGroup>
+
 </Project>
